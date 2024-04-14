@@ -177,7 +177,7 @@ class HybridSN(nn.Module):
         return out
 
 
-# 4.ResNet18和ResNet34
+# 4.ResNet18和ResNet34，残差神经网络
 class ResidualBlock(nn.Module):
     def __init__(self, in_ch, out_ch, stride=(1, 1)):
         super(ResidualBlock, self).__init__()
