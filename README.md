@@ -50,6 +50,7 @@ CBAM原论文中的通道注意力机制和空间注意力机制，论文地址[
 - A Fast 3D CNN for Hyperspectral Image Classification[https://arxiv.org/pdf/2004.14152](https://arxiv.org/pdf/2004.14152)
 - Going Deeper with Contextual CNN for Hyperspectral Image Classification[https://arxiv.org/pdf/1604.03519](https://arxiv.org/pdf/1604.03519)
 - SpectralFormer: Rethinking Hyperspectral Image Classification with Transformers[https://arxiv.org/pdf/2107.02988](https://arxiv.org/pdf/2107.02988)
+- Multitask Deep Learning with Spectral Knowledge for Hyperspectral Image Classification[https://arxiv.org/pdf/1905.04535](https://arxiv.org/pdf/1905.04535)
 - Deep Convolutional Neural Networks for Hyperspectral Image Classification[Deep Convolutional Neural Networks for Hyperspectral Image Classification](https://www.hindawi.com/journals/js/2015/258619/)
 - Wide Contextual Residual Network with Active Learning for Remote Sensing Image Classification[Wide Contextual Residual Network with Active Learning for Remote Sensing Image ](https://www.researchgate.net/publication/328991664_Wide_Contextual_Residual_Network_with_Active_Learning_for_Remote_Sensing_Image_Classification)
 -  Spectral–Spatial Residual Network for Hyperspectral Image Classification:A 3-D Deep Learning Framework[Spectral–Spatial Residual Network for Hyperspectral Image Classification:A 3-D Deep Learning Framework](https://www.researchgate.net/publication/320145356_Deep_Residual_Networks_for_Hyperspectral_Image_Classification)
