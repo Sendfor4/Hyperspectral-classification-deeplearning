@@ -37,7 +37,7 @@ CBAM原论文中的通道注意力机制和空间注意力机制，论文地址[
 - EfficientNet(v2) [https://arxiv.org/abs/2104.00298](https://arxiv.org/abs/2104.00298)
 - Vision Transformer [https://arxiv.org/abs/2010.11929](https://arxiv.org/abs/2010.11929)
 
-## 自然语言处理
+### 自然语言处理
 - Attention Is All You Need [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
 
 ### 注意力机制
