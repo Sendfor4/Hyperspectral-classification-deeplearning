@@ -1,3 +1,4 @@
+# 关于各文件
 ## data
 npy格式的Pavia University数据集、Salinas Valey数据集、Indian Pines数据集。
 ## dataset
@@ -17,7 +18,7 @@ CBAM原论文中的通道注意力机制和空间注意力机制，论文地址[
 ## utils.py
 暂时封装了一些常见的处理方法
 
-## 一些我翻阅的部分外文论文
+# 一些我翻阅的部分外文论文
 ### 图像分类
 - AlexNet [http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
 - VGG [https://arxiv.org/abs/1409.1556](https://arxiv.org/abs/1409.1556)
