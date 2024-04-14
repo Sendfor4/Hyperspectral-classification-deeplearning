@@ -19,14 +19,14 @@ def get_device():
     return device
 
 
-# pad函数，填充边，使用0进行填充
-def pad(dataset, margin):
+# padZero函数，填充边，使用0进行填充
+def padZero(dataset, margin):
     newX = np.zeros((dataset.shape[0], dataset.shape[1]+margin*2, dataset.shape[2]+margin*2))
     newX[:, margin:dataset.shape[1]+margin, margin:dataset.shape[2]+margin] = dataset
     return newX
 
 
-# padding函数，给数据集添加填充，通过重复边缘
+# padding函数，填充边，通过重复边缘
 def padding(dataset, patch_size):
     # 使用常数0在周围进行padding情况
     # padding_dataset = copy.deepcopy(dataset)
