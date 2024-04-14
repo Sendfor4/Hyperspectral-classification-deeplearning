@@ -6,12 +6,12 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
-from torch import nn
+from torch import nn,optim
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
-import tools
-import ClassificationModel
+import utils
+import models
 
 parser = argparse.ArgumentParser(description='settings of this tools')
 parser.add_argument('--method', type=str, default='HResNet')
@@ -56,34 +56,34 @@ dataset_shape_x, dataset_shape_y, dataset_bands_num = dataset.shape
 dataset = np.float32(dataset)
 dataset = dataset / dataset.max()
 
-output_chart = tools.OutputData(num_of_label, args.trial_turn)
+output_chart = utils.OutputData(num_of_label, args.trial_turn)
 
 # 网络选择部分
 net = []
 if args.method == "HResNet":
     print("Using HResNet")
-    net = ClassificationModel.HResNet(num_of_bands=dataset_bands_num, num_of_class=num_of_label, patch_size=args.patch)
+    net = models.HResNet(num_of_bands=dataset_bands_num, num_of_class=num_of_label, patch_size=args.patch)
 elif args.method == "FAST3DCNN":
     print("Using FAST3DCNN")
-    net = ClassificationModel.FAST3DCNN(num_of_bands=dataset_bands_num, num_of_class=num_of_label, patch_size=args.patch)
+    net = models.FAST3DCNN(num_of_bands=dataset_bands_num, num_of_class=num_of_label, patch_size=args.patch)
 elif args.method == "HybridSN":
     print("Using HybridSN")
-    net = ClassificationModel.HybridSN(num_of_bands=dataset_bands_num, num_of_class=num_of_label, patch_size=args.patch)
+    net = models.HybridSN(num_of_bands=dataset_bands_num, num_of_class=num_of_label, patch_size=args.patch)
 elif args.method == "ResNet-18":
     print("Using ResNet-18")
-    net = ClassificationModel.ResNet18(num_of_bands=dataset_bands_num, num_of_class=num_of_label)
+    net = models.ResNet18(num_of_bands=dataset_bands_num, num_of_class=num_of_label)
 elif args.method == "ResNet-34":
     print("Using ResNet-34")
-    net = ClassificationModel.ResNet18(num_of_bands=dataset_bands_num, num_of_class=num_of_label)
+    net = models.ResNet18(num_of_bands=dataset_bands_num, num_of_class=num_of_label)
 else:
     print("the network doesn't exist!")
 
 for current_trial_epoch in range(args.trial_epoch):
     # 对数据进行padding,得到的padding_dataset在外面加了patch/2圈数据
-    padding_dataset = tools.padding(dataset, args.patch)
+    padding_dataset = utils.padding(dataset, args.patch)
     # 制作训练集,以及没有ground truth的训练集
     predict_ground_truth, train_set, trial_label = \
-        tools.make_train_set(padding_dataset, ground_truth, args.samples_per_class)
+        utils.make_train_set(padding_dataset, ground_truth, args.samples_per_class)
 
 
 train_num = train_loader.dataset.__len__()
