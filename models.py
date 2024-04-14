@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""
+分类模型
+"""
 import torch
 from torch import nn
 import torch.nn.functional as F
