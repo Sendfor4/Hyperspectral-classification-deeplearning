@@ -16,3 +16,22 @@ CBAM原论文中的通道注意力机制和空间注意力机制，论文地址[
 来源：https://github.com/Bjarten/early-stopping-pytorch， 实现了pytorch的早停功能。
 ## utils.py
 暂时封装了一些常见的处理方法
+
+## 一些我目前翻阅的论文
+### 图像分类
+- AlexNet [http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
+- VGG [https://arxiv.org/abs/1409.1556](https://arxiv.org/abs/1409.1556)
+- GoogLeNet, Inceptionv1(Going deeper with convolutions) [https://arxiv.org/abs/1409.4842](https://arxiv.org/abs/1409.4842)
+- Inceptionv3(Rethinking the Inception Architecture for Computer Vision) [https://arxiv.org/abs/1512.00567](https://arxiv.org/abs/1512.00567)
+- Xception(Deep Learning with Depthwise Separable Convolutions) [https://arxiv.org/abs/1610.02357](https://arxiv.org/abs/1610.02357)
+- ResNet [https://arxiv.org/abs/1512.03385](https://arxiv.org/abs/1512.03385)
+- ResNeXt [https://arxiv.org/abs/1611.05431](https://arxiv.org/abs/1611.05431)
+- DenseNet [https://arxiv.org/abs/1608.06993](https://arxiv.org/abs/1608.06993)
+- MobileNet(v1) [https://arxiv.org/abs/1704.04861](https://arxiv.org/abs/1704.04861)
+- MobileNet(v2) [https://arxiv.org/abs/1801.04381](https://arxiv.org/abs/1801.04381)
+- MobileNet(v3) [https://arxiv.org/abs/1905.02244](https://arxiv.org/abs/1905.02244)
+- ShuffleNet(v1) [https://arxiv.org/abs/1707.01083](https://arxiv.org/abs/1707.01083)
+- ShuffleNet(v2) [https://arxiv.org/abs/1807.11164](https://arxiv.org/abs/1807.11164)
+- EfficientNet(v1) [https://arxiv.org/abs/1905.11946](https://arxiv.org/abs/1905.11946)
+- EfficientNet(v2) [https://arxiv.org/abs/2104.00298](https://arxiv.org/abs/2104.00298)
+- Vision Transformer [https://arxiv.org/abs/2010.11929](https://arxiv.org/abs/2010.11929)
