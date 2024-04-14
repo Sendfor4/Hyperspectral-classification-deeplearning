@@ -3,8 +3,20 @@
 大概是主要的预处理方法都在这个部分
 """
 import copy
+import torch
 import numpy as np
 import pandas as pd
+
+
+# 判断可训练设备
+def get_device():
+    if torch.cuda.is_available():
+        print("Computation on CUDA GPU device ")
+        device = torch.device('cuda:0')
+    else:
+        print("/!\\ CUDA was requested but is not available! Computation will go on CPU. /!\\")
+        device = torch.device('cpu')
+    return device
 
 
 # padding函数，给数据集添加填充

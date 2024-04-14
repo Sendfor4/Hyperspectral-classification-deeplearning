@@ -32,7 +32,8 @@ args = parser.parse_args()
 dict_args = vars(args)
 
 # 定义训练设备
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = utils.get_device()
+
 if torch.cuda.is_available():
     nw = min([os.cpu_count(), args.batch_size if args.batch_size > 1 else 0, 8])  # number of workers
     print('Using {} dataloader workers every process'.format(nw))
