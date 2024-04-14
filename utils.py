@@ -21,9 +21,9 @@ def get_device():
 
 # pad函数，填充边，使用0进行填充
 def pad(dataset, margin):
-    newdataset = np.zeros((dataset.shape[0], dataset.shape[1]+margin*2, dataset.shape[2]+margin*2))
-    newdataset[:, margin:dataset.shape[1]+margin, margin:dataset.shape[2]+margin] = dataset
-    return newdataset
+    newX = np.zeros((dataset.shape[0], dataset.shape[1]+margin*2, dataset.shape[2]+margin*2))
+    newX[:, margin:dataset.shape[1]+margin, margin:dataset.shape[2]+margin] = dataset
+    return newX
 
 
 # padding函数，给数据集添加填充，通过重复边缘
