@@ -41,19 +41,19 @@ CBAM原论文中的通道注意力机制和空间注意力机制，论文地址[
 - Attention Is All You Need [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
 
 ### 随机深度
-- Deep Networks with Stochastic Depth[https://arxiv.org/pdf/1603.09382v1](https://arxiv.org/pdf/1603.09382v1)
+- Deep Networks with Stochastic Depth [https://arxiv.org/pdf/1603.09382v1](https://arxiv.org/pdf/1603.09382v1)
 ### 注意力机制
-- Squeeze-and-Excitation Networks[https://arxiv.org/pdf/1709.01507](https://arxiv.org/pdf/1709.01507)
-- Selective Kernel Networks[https://arxiv.org/pdf/1903.06586](https://arxiv.org/pdf/1903.06586)
-- CBAM: Convolutional Block Attention Module[https://arxiv.org/abs/1807.06521](https://arxiv.org/abs/1807.06521)
+- Squeeze-and-Excitation Networks [https://arxiv.org/pdf/1709.01507](https://arxiv.org/pdf/1709.01507)
+- Selective Kernel Networks [https://arxiv.org/pdf/1903.06586](https://arxiv.org/pdf/1903.06586)
+- CBAM: Convolutional Block Attention Module [https://arxiv.org/abs/1807.06521](https://arxiv.org/abs/1807.06521)
   
 ### 高光谱分类
-- Deep Learning for Hyperspectral Image Classification: An Overview[https://arxiv.org/pdf/1910.12861v1](https://arxiv.org/pdf/1910.12861v1)
-- HybridSN: Exploring 3D-2D CNN Feature Hierarchy for Hyperspectral Image Classification[https://arxiv.org/pdf/1902.06701](https://arxiv.org/pdf/1902.06701)
-- A Fast 3D CNN for Hyperspectral Image Classification[https://arxiv.org/pdf/2004.14152](https://arxiv.org/pdf/2004.14152)
-- Going Deeper with Contextual CNN for Hyperspectral Image Classification[https://arxiv.org/pdf/1604.03519](https://arxiv.org/pdf/1604.03519)
-- SpectralFormer: Rethinking Hyperspectral Image Classification with Transformers[https://arxiv.org/pdf/2107.02988](https://arxiv.org/pdf/2107.02988)
-- Multitask Deep Learning with Spectral Knowledge for Hyperspectral Image Classification[https://arxiv.org/pdf/1905.04535](https://arxiv.org/pdf/1905.04535)
-- Deep Convolutional Neural Networks for Hyperspectral Image Classification[Deep Convolutional Neural Networks for Hyperspectral Image Classification](https://www.hindawi.com/journals/js/2015/258619/)
-- Wide Contextual Residual Network with Active Learning for Remote Sensing Image Classification[Wide Contextual Residual Network with Active Learning for Remote Sensing Image ](https://www.researchgate.net/publication/328991664_Wide_Contextual_Residual_Network_with_Active_Learning_for_Remote_Sensing_Image_Classification)
--  Spectral–Spatial Residual Network for Hyperspectral Image Classification:A 3-D Deep Learning Framework[Spectral–Spatial Residual Network for Hyperspectral Image Classification:A 3-D Deep Learning Framework](https://www.researchgate.net/publication/320145356_Deep_Residual_Networks_for_Hyperspectral_Image_Classification)
+- Deep Learning for Hyperspectral Image Classification: An Overview [https://arxiv.org/pdf/1910.12861v1](https://arxiv.org/pdf/1910.12861v1)
+- HybridSN: Exploring 3D-2D CNN Feature Hierarchy for Hyperspectral Image Classification [https://arxiv.org/pdf/1902.06701](https://arxiv.org/pdf/1902.06701)
+- A Fast 3D CNN for Hyperspectral Image Classification [https://arxiv.org/pdf/2004.14152](https://arxiv.org/pdf/2004.14152)
+- Going Deeper with Contextual CNN for Hyperspectral Image Classification [https://arxiv.org/pdf/1604.03519](https://arxiv.org/pdf/1604.03519)
+- SpectralFormer: Rethinking Hyperspectral Image Classification with Transformers [https://arxiv.org/pdf/2107.02988](https://arxiv.org/pdf/2107.02988)
+- Multitask Deep Learning with Spectral Knowledge for Hyperspectral Image Classification [https://arxiv.org/pdf/1905.04535](https://arxiv.org/pdf/1905.04535)
+- Deep Convolutional Neural Networks for Hyperspectral Image Classification [Deep Convolutional Neural Networks for Hyperspectral Image Classification](https://www.hindawi.com/journals/js/2015/258619/)
+- Wide Contextual Residual Network with Active Learning for Remote Sensing Image Classification [Wide Contextual Residual Network with Active Learning for Remote Sensing Image ](https://www.researchgate.net/publication/328991664_Wide_Contextual_Residual_Network_with_Active_Learning_for_Remote_Sensing_Image_Classification)
+-  Spectral–Spatial Residual Network for Hyperspectral Image Classification:A 3-D Deep Learning Framework [Spectral–Spatial Residual Network for Hyperspectral Image Classification:A 3-D Deep Learning Framework](https://www.researchgate.net/publication/320145356_Deep_Residual_Networks_for_Hyperspectral_Image_Classification)
