@@ -40,6 +40,8 @@ CBAM原论文中的通道注意力机制和空间注意力机制，论文地址[
 ### 自然语言处理
 - Attention Is All You Need [https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
 
+### 随机深度
+- Deep Networks with Stochastic Depth[https://arxiv.org/pdf/1603.09382v1](https://arxiv.org/pdf/1603.09382v1)
 ### 注意力机制
 - Squeeze-and-Excitation Networks[https://arxiv.org/pdf/1709.01507](https://arxiv.org/pdf/1709.01507)
 - Selective Kernel Networks[https://arxiv.org/pdf/1903.06586](https://arxiv.org/pdf/1903.06586)
