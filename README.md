@@ -45,7 +45,7 @@ CBAM原论文中的通道注意力机制和空间注意力机制，论文地址[
 - Selective Kernel Networks[https://arxiv.org/pdf/1903.06586](https://arxiv.org/pdf/1903.06586)
 - CBAM: Convolutional Block Attention Module[https://arxiv.org/abs/1807.06521](https://arxiv.org/abs/1807.06521)
   
-### 高光谱相关
+### 高光谱分类
 - Deep Learning for Hyperspectral Image Classification: An Overview[https://arxiv.org/pdf/1910.12861v1](https://arxiv.org/pdf/1910.12861v1)
 - HybridSN: Exploring 3D-2D CNN Feature Hierarchy for Hyperspectral Image Classification[https://arxiv.org/pdf/1902.06701](https://arxiv.org/pdf/1902.06701)
 - A Fast 3D CNN for Hyperspectral Image Classification[https://arxiv.org/pdf/2004.14152](https://arxiv.org/pdf/2004.14152)
