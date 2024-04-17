@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import os
 import time
 import sys
@@ -8,7 +7,7 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
-from torch import nn,optim
+from torch import nn, optim
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
@@ -95,7 +94,6 @@ val_num = test_loader.dataset.__len__()
 net.to(device=device)
 loss_function = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr=0.001)
-
 
 for epoch in range(epochs):
     # train

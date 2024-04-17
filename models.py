@@ -6,6 +6,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from torch.utils.tensorboard import SummaryWriter
+from Attention import CBAM
 
 
 # 1.HResNet,快速好用
@@ -116,25 +117,34 @@ class HybridSN(nn.Module):
 
         self.conv1 = nn.Sequential(
             nn.Conv3d(in_channels=1, out_channels=8, kernel_size=(7, 3, 3)),
-            nn.BatchNorm3d(8),
+            #nn.BatchNorm3d(8),
             nn.ReLU(inplace=True))
+        
         self.conv2 = nn.Sequential(
             nn.Conv3d(in_channels=8, out_channels=16, kernel_size=(5, 3, 3)),
-            nn.BatchNorm3d(16),
+            #nn.BatchNorm3d(16),
             nn.ReLU(inplace=True))
+        
         self.conv3 = nn.Sequential(
             nn.Conv3d(in_channels=16, out_channels=32, kernel_size=(3, 3, 3)),
-            nn.BatchNorm3d(32),
+            #nn.BatchNorm3d(32),
             nn.ReLU(inplace=True))
-
+        
         self.x1_shape = self.get_shape_after_3dconv()
-        print(self.x1_shape)
+        #print('self.x1_shape:',self.x1_shape)
+        
+        self.CBAM1 = CBAM(self.x1_shape[1] * self.x1_shape[2])
 
         self.conv4 = nn.Sequential(
             nn.Conv2d(in_channels=self.x1_shape[1] * self.x1_shape[2], out_channels=64, kernel_size=(3, 3)),
+            #nn.BatchNorm2d(64),
             nn.ReLU(inplace=True))
 
+        self.CBAM2 = CBAM(64)
+        
         self.x2_shape = self._get_final_flattened_size()
+#         print('x2_shape', self.x2_shape.shape)
+        
 
         self.dense1 = nn.Sequential(
             nn.Linear(self.x2_shape, 256),
@@ -165,19 +175,36 @@ class HybridSN(nn.Module):
         return x.shape[1] * x.shape[2] * x.shape[3]
 
     def forward(self, x):
+        #print('x.shape:',x.shape)
         x = x.unsqueeze(1)
+        #print('x.shape unsqueeze:',x.shape)
         x = self.conv1(x)
+        #print('x.shape conv1:',x.shape)
         x = self.conv2(x)
+        #print('x.shape conv2:',x.shape)
         x = self.conv3(x)
+        #print('x.shape conv3:',x.shape)
         x = x.view(x.shape[0], x.shape[1] * x.shape[2], x.shape[3], x.shape[4])
-        # print(x.shape)
+        #print('x.shape view:',x.shape)
+
+        x = self.CBAM1(x)
+        
         x = self.conv4(x)
+        #print('x.shape conv4:',x.shape)
+        
+        x = self.CBAM2(x)
+            
         x = x.contiguous().view(x.shape[0], -1)
-        # print(x.shape)
+        #print('x.shape contiguous:',x.shape)
+        
         x = self.dense1(x)
+        
+        #print('x.shape dense1:',x.shape)
+        
         x = self.dense2(x)
+        #print('x.shape dense2:',x.shape)
         out = self.dense3(x)
-        # print(out.shape)
+        #print('x.shape dense3:',out.shape)
         return out
 
 
