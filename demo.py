@@ -22,8 +22,7 @@ parser.add_argument('--trial_epoch', type=int, default=5)
 parser.add_argument('--samples_per_class', type=float, default=0.02)
 parser.add_argument('--patch', type=int, default=9)
 parser.add_argument('--patience', type=int, default=100)
-parser.add_argument('--epoch_alpha', type=int, default=170)
-parser.add_argument('--epoch_beta', type=int, default=30)
+parser.add_argument('--epochs', type=int, default=200)
 parser.add_argument('--batch_size', type=int, default=64)
 parser.add_argument('--verbose', type=bool, default=True)
 parser.add_argument('--output', type=str, default='output')
@@ -93,9 +92,10 @@ val_num = test_loader.dataset.__len__()
 
 net.to(device=device)
 loss_function = nn.CrossEntropyLoss()
-optimizer = optim.Adam(net.parameters(), lr=0.001)
+optimizer = optim.Adam(net.parameters(), lr=0.01)
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=args.epochs/2, gamma=0.1)
 
-for epoch in range(epochs):
+for epoch in range(args.epochs):
     # train
     net.train()
     running_loss = 0.0
@@ -114,10 +114,13 @@ for epoch in range(epochs):
         # print statistics
         running_loss += loss.item()
         train_bar.desc = 'train epoch[{}/{}] loss:{:.3f}'.format(epoch + 1, epochs, loss)
+    
+    scheduler.step()
+
     loss_list.append(running_loss / train_num)
 
     # validate,after train 5 times
-    if (epoch + 1) % 5 == 0 or (epoch + 1) == epochs:
+    if (epoch + 1) % 2 == 0 or (epoch + 1) == args.epochs:
         acc = 0.0  # accumulate accurate number / epoch
         net.eval()
         with torch.no_grad():
