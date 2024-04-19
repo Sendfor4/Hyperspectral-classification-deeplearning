@@ -20,7 +20,8 @@ def get_device():
 
 
 # padZero函数，填充边，使用0进行填充
-def padZero(dataset, margin):
+def padZero(dataset, patch_size):
+    margin = patch_size/2
     newX = np.zeros((dataset.shape[0], dataset.shape[1]+margin*2, dataset.shape[2]+margin*2))
     newX[:, margin:dataset.shape[1]+margin, margin:dataset.shape[2]+margin] = dataset
     return newX
@@ -42,9 +43,9 @@ def padding(dataset, patch_size):
     down_row = np.repeat([padding_dataset[-1, :, :]], pad, axis=0)
     padding_dataset = np.concatenate((up_row, padding_dataset, down_row), axis=0)
     # 按列重复完要转置一下，不然拼接不上
-    left_column = np.repeat([padding_dataset[:, 0, :]], pad, axis=0).transpose((1, 0, 2))
-    right_column = np.repeat([padding_dataset[:, -1, :]], pad, axis=0).transpose((1, 0, 2))
-    padding_dataset = np.concatenate((left_column, padding_dataset, right_column), axis=1)
+    left_col = np.repeat([padding_dataset[:, 0, :]], pad, axis=0).transpose((1, 0, 2))
+    right_col = np.repeat([padding_dataset[:, -1, :]], pad, axis=0).transpose((1, 0, 2))
+    padding_dataset = np.concatenate((left_col, padding_dataset, right_col), axis=1)
     return padding_dataset
 
 
