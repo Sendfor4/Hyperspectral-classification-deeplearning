@@ -141,3 +141,51 @@ def reports(model, device, test_loader, y_test, name):
     kappa = cohen_kappa_score(y_test, y_pred_test)
 
     return classification, confusion, oa * 100, each_acc * 100, aa * 100, kappa * 100
+
+def oversampleWeakClasses(X, y):
+    """
+    增强弱势的数据
+    :param X:
+    :param y:
+    :return:
+    """
+    uniqueLabels, labelCounts = np.unique(y, return_counts=True)
+    maxCount = np.max(labelCounts)
+    labelInverseRatios = maxCount / labelCounts
+    # repeat for every label and concat
+    newX = X[y == uniqueLabels[0], :, :, :].repeat(round(labelInverseRatios[0]), axis=0)
+    newY = y[y == uniqueLabels[0]].repeat(round(labelInverseRatios[0]), axis=0)
+    for label, labelInverseRatio in zip(uniqueLabels[1:], labelInverseRatios[1:]):
+        cX = X[y== label,:,:,:].repeat(round(labelInverseRatio), axis=0)
+        cY = y[y == label].repeat(round(labelInverseRatio), axis=0)
+        newX = np.concatenate((newX, cX))
+        newY = np.concatenate((newY, cY))
+    np.random.seed(seed=42)
+    rand_perm = np.random.permutation(newY.shape[0])
+    newX = newX[rand_perm, :, :, :]
+    newY = newY[rand_perm]
+    return newX, newY
+
+def AugmentData(X_train):
+    """
+    数据增强
+    :param X_train:
+    :return:
+    """
+    for i in range(int(X_train.shape[0] / 2)):
+        patch = X_train[i, :, :, :]
+        num = random.randint(0, 2)
+        if (num == 0):
+            flipped_patch = np.flipud(patch)
+        if (num == 1):
+            flipped_patch = np.fliplr(patch)
+        if (num == 2):
+            no = random.randrange(-180, 180, 30)
+            flipped_patch = scipy.ndimage.interpolation.rotate(patch, no, axes=(1, 0),
+                                                               reshape=False, output=None, order=3, mode='constant',
+                                                               cval=0.0, prefilter=False)
+
+    patch2 = flipped_patch
+    X_train[i, :, :, :] = patch2
+
+    return X_train
