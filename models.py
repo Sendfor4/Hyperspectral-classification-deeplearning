@@ -107,6 +107,93 @@ class FAST3DCNN(nn.Module):
 
 
 # 3. 混合光谱网
+class HybridSNHResNetCBAM(nn.Module):
+    def __init__(self, num_of_bands, num_of_class, patch_size):
+        super().__init__()
+
+        self.patch_size = patch_size
+        self.num_of_bands = num_of_bands
+        self.num_of_class = num_of_class
+
+        self.conv1 = nn.Sequential(
+            nn.Conv3d(in_channels=1, out_channels=8, kernel_size=(7, 3, 3)),
+            nn.ReLU(inplace=True))
+        self.conv2 = nn.Sequential(
+            nn.Conv3d(in_channels=8, out_channels=16, kernel_size=(5, 3, 3)),
+            nn.ReLU(inplace=True))
+        self.conv3 = nn.Sequential(
+            nn.Conv3d(in_channels=16, out_channels=32, kernel_size=(3, 3, 3)),
+            nn.ReLU(inplace=True))
+
+        self.x1_shape = self.get_shape_after_3dconv()
+
+        self.CBAM1 = CBAM(self.x1_shape[1] * self.x1_shape[2])
+        self.conv4 = nn.Sequential(
+            nn.Conv2d(in_channels=self.x1_shape[1] * self.x1_shape[2], out_channels=64, kernel_size=(3, 3)),
+        )
+        self.CBAM2 = CBAM(64)
+
+        self.conv5 = nn.Sequential(
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=(3, 3), padding=(1, 1)),
+        )
+        self.conv6 = nn.Sequential(
+            nn.ReLU(inplace=True),
+            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=(3, 3), padding=(1, 1)),
+        )
+
+        self.x2_shape = self._get_final_flattened_size()
+
+        self.dense1 = nn.Sequential(
+            nn.Linear(self.x2_shape, 256),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.4))
+        self.dense2 = nn.Sequential(
+            nn.Linear(256, 128),
+            nn.ReLU(inplace=True),
+            nn.Dropout(p=0.4))
+        self.dense3 = nn.Sequential(
+            nn.Linear(128, self.num_of_class)
+        )
+
+    def get_shape_after_3dconv(self):
+        x = torch.zeros((1, 1, self.num_of_bands, self.patch_size, self.patch_size))
+        with torch.no_grad():
+            x = self.conv1(x)
+            x = self.conv2(x)
+            x = self.conv3(x)
+        return x.shape
+
+    def _get_final_flattened_size(self):
+        x = torch.zeros((1, self.x1_shape[1] * self.x1_shape[2], self.x1_shape[3], self.x1_shape[4]))
+        with torch.no_grad():
+            x = self.conv4(x)
+        return x.shape[1] * x.shape[2] * x.shape[3]
+
+    def forward(self, x):
+        x = x.unsqueeze(1)
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = x.view(x.shape[0], x.shape[1] * x.shape[2], x.shape[3], x.shape[4])
+
+        x = self.CBAM1(x)
+        x = self.conv4(x)
+        x = self.CBAM2(x)
+
+        x1 = self.conv5(x)
+        x1 = self.conv6(x)
+        x = torch.add(x, x1)
+
+        x = x.contiguous().view(x.shape[0], -1)
+        x = self.dense1(x)
+        x = self.dense2(x)
+        out = self.dense3(x)
+
+        return out
+
+
 class HybridSN(nn.Module):
     def __init__(self, num_of_bands, num_of_class, patch_size):
         super().__init__()
@@ -117,34 +204,24 @@ class HybridSN(nn.Module):
 
         self.conv1 = nn.Sequential(
             nn.Conv3d(in_channels=1, out_channels=8, kernel_size=(7, 3, 3)),
-            #nn.BatchNorm3d(8),
             nn.ReLU(inplace=True))
-        
+
         self.conv2 = nn.Sequential(
             nn.Conv3d(in_channels=8, out_channels=16, kernel_size=(5, 3, 3)),
-            #nn.BatchNorm3d(16),
             nn.ReLU(inplace=True))
-        
+
         self.conv3 = nn.Sequential(
             nn.Conv3d(in_channels=16, out_channels=32, kernel_size=(3, 3, 3)),
-            #nn.BatchNorm3d(32),
             nn.ReLU(inplace=True))
-        
+
         self.x1_shape = self.get_shape_after_3dconv()
-        #print('self.x1_shape:',self.x1_shape)
-        
-        self.CBAM1 = CBAM(self.x1_shape[1] * self.x1_shape[2])
 
         self.conv4 = nn.Sequential(
             nn.Conv2d(in_channels=self.x1_shape[1] * self.x1_shape[2], out_channels=64, kernel_size=(3, 3)),
-            #nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True))
+        )
 
-        self.CBAM2 = CBAM(64)
-        
         self.x2_shape = self._get_final_flattened_size()
-#         print('x2_shape', self.x2_shape.shape)
-        
+        #         print('x2_shape', self.x2_shape.shape)
 
         self.dense1 = nn.Sequential(
             nn.Linear(self.x2_shape, 256),
@@ -175,36 +252,21 @@ class HybridSN(nn.Module):
         return x.shape[1] * x.shape[2] * x.shape[3]
 
     def forward(self, x):
-        #print('x.shape:',x.shape)
         x = x.unsqueeze(1)
-        #print('x.shape unsqueeze:',x.shape)
-        x = self.conv1(x)
-        #print('x.shape conv1:',x.shape)
-        x = self.conv2(x)
-        #print('x.shape conv2:',x.shape)
-        x = self.conv3(x)
-        #print('x.shape conv3:',x.shape)
-        x = x.view(x.shape[0], x.shape[1] * x.shape[2], x.shape[3], x.shape[4])
-        #print('x.shape view:',x.shape)
 
-        x = self.CBAM1(x)
-        
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = x.view(x.shape[0], x.shape[1] * x.shape[2], x.shape[3], x.shape[4])
+
         x = self.conv4(x)
-        #print('x.shape conv4:',x.shape)
-        
-        x = self.CBAM2(x)
-            
+
         x = x.contiguous().view(x.shape[0], -1)
-        #print('x.shape contiguous:',x.shape)
-        
+
         x = self.dense1(x)
-        
-        #print('x.shape dense1:',x.shape)
-        
         x = self.dense2(x)
-        #print('x.shape dense2:',x.shape)
         out = self.dense3(x)
-        #print('x.shape dense3:',out.shape)
+
         return out
 
 

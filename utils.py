@@ -29,19 +29,15 @@ def padZero(dataset, patch_size):
 
 # padding函数，填充边，通过重复边缘
 def padding(dataset, patch_size):
-    # 使用常数0在周围进行padding情况
-    # padding_dataset = copy.deepcopy(dataset)
-    # p = patch_size // 2  # 补丁一半的大小
-    # # 对数据进行填充，'constant'指定填充类型为常数，constant_values = 0表示填充值为0
-    # padding_dataset = np.pad(padding_dataset, ((p, p), (p, p), (0, 0)), 'constant', constant_values=0)
-    # return padding_dataset
-
     # 在数据集的上下分别加patch/2行数据(最近的那一行重复加)，再在左右分别加patch/2列数据
     padding_dataset = copy.deepcopy(dataset)
     pad = patch_size//2
+
+    # 按行重复
     up_row = np.repeat([padding_dataset[0, :, :]], pad, axis=0)
     down_row = np.repeat([padding_dataset[-1, :, :]], pad, axis=0)
     padding_dataset = np.concatenate((up_row, padding_dataset, down_row), axis=0)
+
     # 按列重复完要转置一下，不然拼接不上
     left_col = np.repeat([padding_dataset[:, 0, :]], pad, axis=0).transpose((1, 0, 2))
     right_col = np.repeat([padding_dataset[:, -1, :]], pad, axis=0).transpose((1, 0, 2))
@@ -70,6 +66,16 @@ def make_train_set(dataset, ground_truth, sample_num_per_class):
     # 搜寻每类标签的坐标,随机打乱，取每类前sample_num_per_class个作为训练集
     patch_size = dataset.shape[0] - ground_truth.shape[0] + 1
     label_coordinate = list()
+
+    # 数据增强，竖直，水平，对角线翻转数据集合，使其变为原来的4倍
+    vertical = np.flip(train_sample,1)
+    horizontal = np.flip(train_sample, 2)
+    crosswise = np.flip(horizontal, 1)
+    newsample = np.concatenate((vertical, horizontal, crosswise, train_sample), axis=0)
+    newlabel = np.concatenate((train_label, train_label, train_label, train_label), axis=0)
+    return newsample, newlabel
+
+
 
 
 # 这个类是用来输出详细数据表格的详细数据包括什么训练时间、OA、F1score之类的，还有记录argument里面的一些重要参数。
