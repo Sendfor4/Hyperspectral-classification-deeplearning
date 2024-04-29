@@ -99,6 +99,11 @@ def create_image_cubes(X, y, patch_size=5, removeZeroLabels=True):
 
 
 def aa_and_each_class_accuracy(confusion_matrix):
+    """
+        :param confusion_matrix: 混淆矩阵
+        :return:
+    """
+
     counter = confusion_matrix.shape[0]
     list_diag = np.diag(confusion_matrix)
     list_raw_sum = np.sum(confusion_matrix, axis=1)
@@ -144,9 +149,9 @@ def reports(model, device, test_loader, y_test, name):
 
 def oversampleWeakClasses(X, y):
     """
-    增强弱势的数据
-    :param X:
-    :param y:
+    增强弱势的数据,以平衡数据集
+    :param X: 数据样本
+    :param y:数据标签
     :return:
     """
     uniqueLabels, labelCounts = np.unique(y, return_counts=True)
@@ -169,7 +174,7 @@ def oversampleWeakClasses(X, y):
 def AugmentData(X_train):
     """
     数据增强
-    :param X_train:
+    :param X_train: 训练数据集
     :return:
     """
     for i in range(int(X_train.shape[0] / 2)):
