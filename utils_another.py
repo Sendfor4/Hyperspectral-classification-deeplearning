@@ -4,10 +4,11 @@
 """
 import torch
 import numpy as np
+import random
+import scipy
 import os
 from scipy.io import loadmat
 from torchinfo import summary
-from scipy.io import loadmat
 from sklearn.decomposition import PCA
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix, cohen_kappa_score
 from sklearn.model_selection import train_test_split
@@ -101,10 +102,9 @@ def create_image_cubes(X, y, patch_size=5, removeZeroLabels=True):
 def aa_and_each_class_accuracy(confusion_matrix):
     """
         :param confusion_matrix: 混淆矩阵
-        :return:
+        :return: each_acc, average_acc
     """
 
-    counter = confusion_matrix.shape[0]
     list_diag = np.diag(confusion_matrix)
     list_raw_sum = np.sum(confusion_matrix, axis=1)
     each_acc = np.nan_to_num(truediv(list_diag, list_raw_sum))

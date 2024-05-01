@@ -15,7 +15,7 @@ import models
 import random
 
 parser = argparse.ArgumentParser(description='settings of this tools')
-parser.add_argument('--method', type=str, default='HybridSN')
+parser.add_argument('--method', type=str, default='HybridSNHResNetCBAM')
 parser.add_argument('--dataset', type=str, default='IP')
 parser.add_argument('--components', type=int, default=30)
 parser.add_argument('--test_ratio', type=float, default=0.7)
@@ -113,7 +113,7 @@ test_loader = DataLoader(TestDataset, batch_size=args.batch_size, shuffle=False,
 net = []
 if args.method == 'HybridSNHResNetCBAM':
     print('Using HybridSNHResNetCBAM')
-    net = models.HybridSN(num_of_bands=pca_components, num_of_class=args.class_nums, patch_size=args.ppatch_size)
+    net = models.HybridSNHResNetCBAM(num_of_bands=pca_components, num_of_class=args.class_nums, patch_size=args.patch_size)
 elif args.method == 'HybridSN':
     print('Using HybridSN')
     net = models.HybridSN(num_of_bands=pca_components, num_of_class=args.class_nums, patch_size=args.patch_size)
@@ -189,7 +189,7 @@ for epoch in range(args.epochs):
             best_acc = val_accurate
             torch.save(net.state_dict(), save_path)
 
-model = models.HybridSN(num_of_bands=pca_components, num_of_class=args.class_nums,
+model = models.HybridSNHResNetCBAM(num_of_bands=pca_components, num_of_class=args.class_nums,
                         patch_size=args.patch_size).to(device=device)
 weights_path = save_path
 assert os.path.exists(weights_path), "file: '{}' dose not exist.".format(weights_path)
@@ -227,7 +227,7 @@ X, pca = apply_pca(data, num_components=pca_components)
 X = pad_with_zero(X, patch_size//2)
 
 # 逐像素预测图像类别
-outputs = np.zeros((height,width))
+outputs = np.zeros((height, width))
 for i in range(height):
     for j in range(width):
         if int(y[i, j]) == 0:
